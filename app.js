@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+// var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var reportsRouter = require('./routes/reports');
 
@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/reports', reportsRouter);
 
@@ -43,8 +43,8 @@ app.use(function(err, req, res, next) {
 });
 
 //Serve it everywhere
-app.get('*', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '/public/index.html'))
-})
+// app.get('*', function(req, res) {
+//   res.sendFile(path.resolve(__dirname, '/public/index.html'))
+// })
 
 module.exports = app;

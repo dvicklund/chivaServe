@@ -1,22 +1,20 @@
 var express = require('express');
 var router = express.Router();
+
+const CONFIG = require(__dirname + '/../.config/service.js')
+
 var knex = require('knex')({
   client: 'pg',
-  connection: {
-    host: 'chivalist-test-db.cfx2zmgjrtr7.us-east-1.rds.amazonaws.com',
-    user: 'david',
-    password: 'pU7SYg4oo2jsRzE8h1hBe54S0Yl6OGlhYWL6vbVTBREeEWUWZi887Q6COUjzV3JhSrK5skKEu16ViGSxBkCYJW1x7eGzEomZdfqf',
-    database: 'chivaldb',
-    port: 5588
-  }
+  connection: CONFIG.PG_CONN
 });
 
 /* GET All reports. */
 router.get('/', function(req, res, next) {
   knex('reports').select({
-    title: 'title',
-    body: 'body'
-  }).then((response) => {
+    title: 'reports.title',
+    body: 'reports.body',
+    username: 'users.first_name'
+  }).join('users', 'reports.user_id', '=', 'users.id').then((response) => {
     res.send(response)
   }).catch((err) => {
     res.status(500).send(err)
